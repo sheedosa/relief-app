@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Relief | Pay verified bills with your sadaqah and zakat</title>
+<meta name="description" content="Relief is a UK Muslim giving app concept. Masjids verify real bills, and donors pay them directly as sadaqah or zakat, with Gift Aid. Try the live demo.">
+<meta name="keywords" content="sadaqah, zakat, UK Muslim charity, pay bills, zakat calculator UK, nisab, Gift Aid, masjid, debt relief, cost of living">
+<meta name="author" content="Relief">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://sheedosa.github.io/relief-app/">
+<meta name="theme-color" content="#0f3d35">
+<meta name="color-scheme" content="light">
+<meta name="format-detection" content="telephone=no">
+
+<!-- Open Graph: WhatsApp, Facebook, LinkedIn, iMessage -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Relief">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://sheedosa.github.io/relief-app/">
+<meta property="og:title" content="Relief: bills, settled">
+<meta property="og:description" content="Masjids verify real bills across the UK. You pay them directly as sadaqah or zakat, with Gift Aid. Try the demo.">
+<meta property="og:image" content="https://sheedosa.github.io/relief-app/og-image.png">
+<meta property="og:image:secure_url" content="https://sheedosa.github.io/relief-app/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Relief. Bills, settled. A verified prepayment meter bill in Bradford, ready to pay.">
+
+<!-- X / Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Relief: bills, settled">
+<meta name="twitter:description" content="Masjids verify real bills across the UK. You pay them directly as sadaqah or zakat, with Gift Aid.">
+<meta name="twitter:image" content="https://sheedosa.github.io/relief-app/og-image.png">
+<meta name="twitter:image:alt" content="Relief. Bills, settled.">
+
+<!-- Icons and install -->
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Relief">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://sheedosa.github.io/relief-app/#app",
+      "name": "Relief",
+      "url": "https://sheedosa.github.io/relief-app/",
+      "description": "A UK Muslim giving app concept. Masjids verify real bills, and donors pay them directly to the biller as sadaqah or zakat, with Gift Aid.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "en-GB",
+      "isAccessibleForFree": true,
+      "image": "https://sheedosa.github.io/relief-app/og-image.png",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+      "areaServed": { "@type": "Country", "name": "United Kingdom" },
+      "featureList": ["Pay masjid-verified bills directly to the biller", "Give as sadaqah or zakat", "Gift Aid for UK taxpayers", "Zakat calculator with silver or gold nisab", "Anonymous help requests"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://sheedosa.github.io/relief-app/#site",
+      "name": "Relief",
+      "url": "https://sheedosa.github.io/relief-app/",
+      "inLanguage": "en-GB"
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: one deep masjid-tile green field; every bill is a white paper slip with a tear-off stub.
+   Type does the work: one variable grotesque, condensed for figures and headlines and regular
+   width for reading. Left-aligned throughout. */
+:root{
+  color-scheme:light;
+  --night:#0f3d35;      /* app field: deep tile green */
+  --night-2:#1a5046;    /* raised on field */
+  --paper:#ffffff;      /* bill slips, sheets */
+  --ink:#0d2420;        /* text on paper */
+  --soft:#5c6e69;       /* secondary text on paper */
+  --mist:#edf2f0;       /* fields, tracks */
+  --marigold:#ffb3c7;   /* the one action colour: rose */
+  --paid:#178a5c;       /* semantic: verified, cleared */
+  --late:#d93a3f;       /* semantic: due soon */
+  --on-night:#ffffff;
+  --on-night-soft:rgba(255,255,255,.68);
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  /* scale: 13 · 15 · 17 · 21 · 32 · 52 · fluid figure */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--display);font-size:15px;line-height:1.45;background:var(--night);color:var(--on-night);
+  -webkit-font-smoothing:antialiased;overscroll-behavior:none;font-optical-sizing:auto}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
+.fig{font-stretch:75%;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:.9}
+
+.app{max-width:460px;margin:0 auto;height:100%;background:var(--night);display:flex;flex-direction:column;
+  position:relative;overflow:hidden;padding-top:env(safe-area-inset-top)}
+.demo{font-size:13px;text-align:center;padding:6px 16px;color:var(--on-night-soft);background:var(--night-2)}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 10px}
+.brand{display:flex;align-items:flex-end;gap:4px}
+.brand b{font-size:28px;font-weight:800;font-stretch:75%;letter-spacing:-.02em;line-height:1}
+.brand i{width:8px;height:8px;border-radius:50%;background:var(--marigold);margin-bottom:2px}
+.given{font-size:15px;color:var(--on-night-soft)}
+.given b{color:var(--on-night);font-variant-numeric:tabular-nums;font-weight:700}
+
+main{flex:1;min-height:0;overflow-y:auto;padding:0 20px}
+.view{display:none}
+.view.on{display:flex;flex-direction:column;gap:16px;padding-bottom:16px}
+#v-give.on{height:100%;gap:12px}
+h1{font-size:32px;font-weight:700;font-stretch:75%;letter-spacing:-.02em;line-height:1.05;text-wrap:balance;margin-top:6px}
+.sub{color:var(--on-night-soft);font-size:15px;max-width:38ch}
+
+/* filters */
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg button{padding:8px 14px;border-radius:99px;font-size:15px;font-weight:500;color:var(--on-night-soft);
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22)}
+.seg button.on{background:var(--on-night);color:var(--ink);box-shadow:none;font-weight:700}
+
+/* deck */
+.deck{position:relative;flex:1;min-height:330px;max-height:540px}
+.acts{margin-top:auto}
+.bill{--stub:96px;position:absolute;inset:0 0 14px 0;background:var(--paper);color:var(--ink);border-radius:20px;
+  display:flex;flex-direction:column;touch-action:pan-y;user-select:none;-webkit-user-select:none;
+  transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .28s;will-change:transform;overflow:hidden;
+  -webkit-mask:radial-gradient(circle 11px at 0 calc(100% - var(--stub)),#0000 97%,#000),radial-gradient(circle 11px at 100% calc(100% - var(--stub)),#0000 97%,#000);
+  -webkit-mask-composite:source-in;
+  mask:radial-gradient(circle 11px at 0 calc(100% - var(--stub)),#0000 97%,#000),radial-gradient(circle 11px at 100% calc(100% - var(--stub)),#0000 97%,#000);
+  mask-composite:intersect}
+.bill.drag{transition:none}
+.body{flex:1;min-height:0;padding:20px 22px 12px;display:flex;flex-direction:column}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.kind{font-size:24px;font-weight:700;line-height:1.15}
+.biller{font-size:13px;color:var(--soft);margin-top:2px}
+.sum{display:flex;align-items:flex-end;gap:10px;margin:14px 0 10px}
+.sum .fig{font-size:clamp(60px,19vw,88px)}
+.sum span{font-size:13px;color:var(--soft);padding-bottom:6px;line-height:1.3}
+.sum em{font-style:normal;display:block;font-weight:700;font-size:13px}
+.sum em.soon{color:var(--late)}
+.who{font-size:17px;font-weight:700;line-height:1.2}
+.city{font-size:13px;color:var(--soft)}
+.story{font-size:15px;line-height:1.4;margin-top:6px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+.stub{height:var(--stub);padding:14px 22px 0;border-top:2px dashed #cddbd6;display:flex;flex-direction:column;gap:8px}
+.stub .line{display:flex;justify-content:space-between;gap:10px;font-size:13px}
+.ok{color:var(--paid);font-weight:700}
+.kindtag{font-weight:700}
+.track{height:6px;border-radius:6px;background:var(--mist);overflow:hidden}
+.track i{display:block;height:100%;background:var(--ink);border-radius:6px}
+.stamp{position:absolute;top:38%;left:50%;font-size:40px;font-weight:800;font-stretch:75%;padding:2px 18px;border:4px solid;border-radius:10px;
+  background:var(--paper);opacity:0;pointer-events:none}
+.stamp.pay{color:var(--paid);transform:translate(-50%,-50%) rotate(-9deg)}
+.stamp.skip{color:var(--late);transform:translate(-50%,-50%) rotate(9deg)}
+.acts{display:flex;gap:10px}
+.cta{flex:1;padding:16px 18px;border-radius:99px;background:var(--marigold);color:var(--ink);font-size:17px;font-weight:700;line-height:1.2}
+.cta:disabled{opacity:.4}
+.quiet{padding:16px 22px;border-radius:99px;font-size:17px;font-weight:500;color:var(--on-night);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.3)}
+.empty{position:absolute;inset:0 0 14px 0;border-radius:20px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.2);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:28px}
+.empty b{font-size:32px;font-stretch:75%;line-height:1.05}
+.empty span{color:var(--on-night-soft)}
+
+/* paper sheets on other tabs */
+.sheetbox{background:var(--paper);color:var(--ink);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.sheetbox h2{font-size:21px;font-weight:700;line-height:1.15}
+.f{display:flex;flex-direction:column;gap:6px}
+.f label{font-size:13px;font-weight:700}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:0;background:var(--mist);font-size:16px;color:var(--ink)}
+input[type=file]{font-size:13px;padding:12px}
+textarea{min-height:84px;resize:vertical}
+.note{font-size:13px;color:var(--soft);line-height:1.45}
+.steps{list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:14px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;font-size:15px;line-height:1.4}
+.steps li::before{content:counter(s);font-size:32px;font-weight:800;font-stretch:75%;line-height:.9;color:var(--marigold);-webkit-text-stroke:0}
+.steps b{display:block}
+.steps span{grid-column:2;color:var(--soft)}
+.rowi{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--mist);font-size:15px}
+.rowi small{display:block;font-size:13px;color:var(--soft)}
+.rowi .amt{font-weight:700;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.rowi .amt small{font-weight:500}
+.rowi .amt small.ok{color:var(--paid);font-weight:700}
+
+/* zakat + impact statements */
+.state{display:flex;flex-direction:column;gap:6px}
+.state .fig{font-size:clamp(64px,22vw,96px);color:var(--marigold)}
+.state p{font-size:15px;color:var(--on-night-soft);max-width:36ch}
+.say{font-size:32px;font-weight:700;font-stretch:75%;letter-spacing:-.02em;line-height:1.1;text-wrap:balance}
+.say b{color:var(--marigold);font-variant-numeric:tabular-nums}
+.say.dim{font-size:21px;font-stretch:100%;letter-spacing:0;font-weight:500;color:var(--on-night-soft);line-height:1.3}
+.say.dim b{color:var(--on-night)}
+
+/* nav: floating glass bar */
+nav{margin:6px 16px calc(12px + env(safe-area-inset-bottom));padding:5px;border-radius:99px;display:grid;grid-template-columns:repeat(4,1fr);
+  background:rgba(255,255,255,.1);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+nav button{padding:11px 0;border-radius:99px;font-size:15px;font-weight:500;color:var(--on-night-soft)}
+nav button.on{background:var(--on-night);color:var(--ink);font-weight:700}
+
+/* pay sheet */
+.scrim{position:absolute;inset:0;background:rgba(4,24,20,.6);opacity:0;pointer-events:none;transition:opacity .2s;z-index:5}
+.pay-sheet{position:absolute;left:0;right:0;bottom:0;background:var(--paper);color:var(--ink);border-radius:26px 26px 0 0;
+  padding:22px 20px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px;
+  transform:translateY(105%);transition:transform .3s cubic-bezier(.2,.8,.2,1);z-index:6}
+.open .scrim{opacity:1;pointer-events:auto}.open .pay-sheet{transform:none}
+.pay-sheet h2{font-size:32px;font-weight:700;font-stretch:75%;letter-spacing:-.02em;line-height:1.05}
+.pay-sheet p{font-size:15px;color:var(--soft)}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opts button{padding:10px 16px;border-radius:99px;background:var(--mist);font-size:17px;font-weight:700;font-variant-numeric:tabular-nums}
+.opts button.on{background:var(--ink);color:var(--paper)}
+.opts button:disabled{opacity:.35}
+.pay-sheet .cta{flex:none;width:100%}
+.ga{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:var(--mist);font-size:13px;line-height:1.4;color:var(--soft);cursor:pointer}
+.ga input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--ink)}
+.ga b{display:block;font-size:15px;color:var(--ink)}
+.textbtn{padding:10px;font-size:15px;font-weight:500;color:var(--soft)}
+.toast{position:absolute;left:20px;right:20px;top:calc(64px + env(safe-area-inset-top));background:var(--paper);color:var(--ink);padding:14px 16px;border-radius:14px;
+  font-size:15px;font-weight:500;opacity:0;transform:translateY(-12px);transition:.25s;z-index:9;pointer-events:none;box-shadow:0 12px 40px rgba(0,20,15,.4)}
+.toast.on{opacity:1;transform:none}
+.toast b{color:var(--paid)}
+@media (max-height:680px){.story{-webkit-line-clamp:2}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<noscript><p style="padding:24px;font-size:17px;line-height:1.5">Relief needs JavaScript to run the demo. Relief is a UK Muslim giving app concept: masjids verify real bills, and donors pay them directly as sadaqah or zakat, with Gift Aid.</p></noscript>
+<div class="app" id="app">
+  <div class="demo">Demo with sample cases. No real payments or Gift Aid claims.</div>
+  <header>
+    <div class="brand"><b>Relief</b><i aria-hidden="true"></i></div>
+    <div class="given">You gave <b id="givenTop">£0</b></div>
+  </header>
+
+  <main>
+    <section class="view on" id="v-give">
+      <div class="seg" id="filters">
+        <button class="on" data-f="all">All bills</button>
+        <button data-f="zakat">Zakat-eligible</button>
+        <button data-f="urgent">Due this week</button>
+      </div>
+      <div class="deck" id="deck"></div>
+      <div class="acts">
+        <button class="quiet" id="bSkip">Skip</button>
+        <button class="cta" id="bPay">Pay this bill</button>
+      </div>
+    </section>
+
+    <section class="view" id="v-ask">
+      <h1>Ask for help with a bill</h1>
+      <p class="sub">Donors never see your name. A masjid near you confirms the bill, and the money goes straight to whoever you owe.</p>
+      <form class="sheetbox" id="askForm">
+        <div class="f"><label for="aType">Type of bill</label>
+          <select id="aType" name="type" required>
+            <option>Gas and electricity</option><option>Council tax</option><option>Rent arrears</option><option>Water</option>
+            <option>School costs</option><option>Funeral costs</option><option>Debt (principal only)</option>
+          </select></div>
+        <div class="two">
+          <div class="f"><label for="aAmt">Amount in £</label><input id="aAmt" name="amount" type="number" min="1" inputmode="decimal" required></div>
+          <div class="f"><label for="aDue">Due date</label><input id="aDue" name="due" type="date" required></div>
+        </div>
+        <div class="f"><label for="aBiller">Who is it owed to?</label><input id="aBiller" name="biller" placeholder="Your energy supplier or council" required></div>
+        <div class="f"><label for="aStory">Your situation</label><textarea id="aStory" name="story" placeholder="A few sentences. Shown without your name." required></textarea></div>
+        <div class="f"><label for="aFile">Photo of the bill</label><input id="aFile" type="file" accept="image/*,.pdf"></div>
+        <div class="f"><label for="aVer">Who should verify it?</label>
+          <select id="aVer" name="verifier">
+            <option>A masjid committee near me</option><option>A partner charity</option><option>My university Islamic society</option>
+          </select></div>
+        <button class="cta">Send for verification</button>
+        <p class="note">In this demo nothing is uploaded or sent anywhere.</p>
+      </form>
+      <div class="sheetbox" id="myReq" hidden><h2>Your requests</h2><div id="reqList"></div></div>
+    </section>
+
+    <section class="view" id="v-zakat">
+      <h1>Work out your zakat</h1>
+      <div class="state">
+        <div class="fig" id="zDue">£0</div>
+        <p id="zMsg">Enter your figures below.</p>
+      </div>
+      <button class="cta" id="zGive" disabled>Give it to zakat-eligible bills</button>
+      <div class="sheetbox" id="zForm">
+        <div class="two">
+          <div class="f"><label for="zCash">Cash and savings</label><input id="zCash" data-z="cash" type="number" inputmode="decimal" placeholder="0"></div>
+          <div class="f"><label for="zGold">Gold and silver</label><input id="zGold" data-z="gold" type="number" inputmode="decimal" placeholder="0"></div>
+        </div>
+        <div class="two">
+          <div class="f"><label for="zInv">Investments</label><input id="zInv" data-z="inv" type="number" inputmode="decimal" placeholder="0"></div>
+          <div class="f"><label for="zOwed">Owed to you</label><input id="zOwed" data-z="owed" type="number" inputmode="decimal" placeholder="0"></div>
+        </div>
+        <div class="two">
+          <div class="f"><label for="zDebt">Debts due now</label><input id="zDebt" data-z="debt" type="number" inputmode="decimal" placeholder="0"></div>
+          <div class="f"><label for="zNb">Nisab based on</label><select id="zNb" data-zm><option value="silver">Silver, 612.36 g</option><option value="gold">Gold, 87.48 g</option></select></div>
+        </div>
+        <div class="f"><label for="zGp" id="zGpL">Silver price per gram, £</label><input id="zGp" data-z="gp" type="number" inputmode="decimal" step="0.01" value="0.80"></div>
+        <p class="note" id="zNisab"></p>
+        <p class="note">Zakat is 2.5% of wealth held for a lunar year once it passes the nisab. Many UK zakat bodies use the silver nisab because it is lower and so reaches more people in need. The metal prices here are examples, so enter today's. For rulings on your own situation, ask a scholar you trust.</p>
+      </div>
+    </section>
+
+    <section class="view" id="v-impact">
+      <h1 class="say" id="sayMe"></h1>
+      <p class="say dim">Donors across the UK have settled <b>£41,380</b> across <b>538</b> bills. These two figures are sample data.</p>
+      <div class="sheetbox"><h2>Your giving</h2><div id="hist"><p class="note">Nothing yet. Pay a bill and it shows up here.</p></div></div>
+      <div class="sheetbox">
+        <h2>How Relief works</h2>
+        <ol class="steps">
+          <li><b>Someone submits a bill</b><span>A person in hardship uploads a real bill they cannot pay.</span></li>
+          <li><b>A masjid verifies it</b><span>A local committee checks the bill and confirms whether zakat may be used.</span></li>
+          <li><b>Donors pay it</b><span>Part or all of it, as sadaqah or zakat, with Gift Aid if they pay UK tax.</span></li>
+          <li><b>The biller is paid directly</b><span>No cash changes hands, and the donor gets a receipt.</span></li>
+        </ol>
+        <p class="note">Recipients stay anonymous. All zakat reaches the bill. Gift Aid reclaimed from HMRC funds more bills. Running costs come from optional tips. Debts are paid without interest.</p>
+      </div>
+    </section>
+  </main>
+
+  <nav id="nav">
+    <button class="on" data-v="give">Give</button>
+    <button data-v="ask">Request</button>
+    <button data-v="zakat">Zakat</button>
+    <button data-v="impact">Impact</button>
+  </nav>
+
+  <div class="scrim" id="scrim"></div>
+  <div class="pay-sheet" id="sheet">
+    <div><h2 id="shTitle">Pay this bill</h2><p id="shSub"></p></div>
+    <div class="opts" id="shAmts"></div>
+    <div class="f"><label for="shCustom">Or another amount</label><input id="shCustom" type="number" inputmode="decimal" placeholder="0"></div>
+    <div class="f"><label>Give as</label>
+      <div class="opts" id="shType">
+        <button data-t="Sadaqah">Sadaqah</button>
+        <button data-t="Zakat">Zakat</button>
+      </div>
+      <p class="note" id="shOnly" hidden>This bill is verified for sadaqah only.</p>
+    </div>
+    <label class="ga" for="shGa"><input type="checkbox" id="shGa"><span><b>Add Gift Aid</b><span id="shGaTxt">We can claim 25p for every £1 from HMRC, at no cost to you, and put it towards more bills. You must be a UK taxpayer.</span></span></label>
+    <button class="cta" id="shGo">Pay</button>
+    <button class="textbtn" id="shNo">Not now</button>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const money = n => '£' + Math.round(n).toLocaleString('en-GB');
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let deck = [
+ {type:'Prepayment meter top-up',biller:'Energy supplier, verified',amount:60,raised:15,days:2,zakat:true,who:'Single mum of two',city:'Bradford',story:'Her meter is on emergency credit and the heating goes off when it runs out. Universal Credit arrives in nine days.',by:'a masjid in Bradford'},
+ {type:'Council tax arrears',biller:'Local council, verified',amount:240,raised:90,days:6,zakat:true,who:'Full-time carer, 52',city:'Tower Hamlets, London',story:'She cares for her disabled husband. A summons has been issued and enforcement agents are the next step.',by:'a masjid in east London'},
+ {type:'Rent arrears',biller:'Landlord, verified',amount:520,raised:180,days:10,zakat:true,who:'Family of five',city:'Birmingham',story:'The father was made redundant from a warehouse job in September. One month behind, with a possession notice served.',by:'a masjid in Sparkbrook'},
+ {type:'School uniform and trip',biller:'Secondary school, verified',amount:95,raised:0,days:14,zakat:false,who:'Two brothers, 11 and 13',city:'Leicester',story:'New blazers after a growth spurt, and a Year 9 geography trip their mum cannot cover this month.',by:'a partner charity in Leicester'},
+ {type:'Funeral costs',biller:'Funeral service, verified',amount:1200,raised:640,days:4,zakat:true,who:'Widow, 71',city:'Manchester',story:'Her husband passed away last week. The janazah has been held and the burial plot and service are still unpaid.',by:'a masjid in Longsight'},
+ {type:'Water bill',biller:'Water company, verified',amount:75,raised:25,days:3,zakat:true,who:'Pensioner living alone',city:'Luton',story:'On the basic State Pension. Two quarters of water charges are overdue after a leak pushed the bill up.',by:'a masjid in Luton'},
+ {type:'Debt, principal only',biller:'Creditor, verified',amount:400,raised:110,days:21,zakat:true,who:'Postgraduate student',city:'Glasgow',story:'Borrowed for a deposit when her funding came late. Only the amount owed is paid, never interest.',by:'a university Islamic society'}
+];
+const st = {filter:'all', given:0, cleared:0, hist:[], reqs:[], zakatMode:false, current:null, giveType:'Sadaqah', amt:0};
+
+const visible = () => deck.filter(c => st.filter==='zakat' ? c.zakat : st.filter==='urgent' ? c.days<=7 : true);
+
+function billHTML(c){
+  const left = c.amount - c.raised, pct = Math.round(c.raised/c.amount*100);
+  return `<div class="body">
+    <div class="head"><div><div class="kind">${c.type}</div><div class="biller">Paid to ${c.biller[0].toLowerCase()+c.biller.slice(1)}</div></div></div>
+    <div class="sum"><div class="fig">${money(left)}</div><span><em class="${c.days<=3?'soon':''}">Due in ${c.days} days</em>left of ${money(c.amount)}</span></div>
+    <div class="who">${c.who}</div><div class="city">${c.city}</div>
+    <div class="story">${c.story}</div>
+  </div>
+  <div class="stub">
+    <div class="line"><span class="ok">Verified by ${c.by}</span></div>
+    <div class="track"><i style="width:${pct}%"></i></div>
+    <div class="line"><span>${money(c.raised)} given so far</span><span class="kindtag">${c.zakat?'Zakat or sadaqah':'Sadaqah only'}</span></div>
+  </div>
+  <div class="stamp pay">Pay</div><div class="stamp skip">Skip</div>`;
+}
+
+function renderDeck(){
+  const d = $('#deck'), v = visible(); d.innerHTML = '';
+  $('#bPay').disabled = !v.length; $('#bSkip').disabled = v.length < 2;
+  if(!v.length){ d.innerHTML = '<div class="empty"><b>Every bill here is settled.</b><span>Choose another filter to see more.</span></div>'; return; }
+  v.slice(0,3).reverse().forEach((c,i,arr)=>{
+    const depth = arr.length-1-i, el = document.createElement('div');
+    el.className = 'bill'; el.innerHTML = billHTML(c);
+    el.style.transform = `translateY(${depth*14}px) scale(${1-depth*0.05})`;
+    el.style.opacity = [1,.55,.25][depth];
+    if(depth===0){ el.id = 'topBill'; drag(el, c); }
+    d.appendChild(el);
+  });
+}
+
+function drag(el, c){
+  let sx=0, dx=0, on=false;
+  const pay = el.querySelector('.pay'), skip = el.querySelector('.skip');
+  el.addEventListener('pointerdown', e=>{ on=true; sx=e.clientX; dx=0; el.classList.add('drag'); el.setPointerCapture(e.pointerId); });
+  el.addEventListener('pointermove', e=>{ if(!on) return; dx=e.clientX-sx;
+    el.style.transform=`translateX(${dx}px) rotate(${dx/22}deg)`;
+    pay.style.opacity=Math.max(0,Math.min(1,dx/90)); skip.style.opacity=Math.max(0,Math.min(1,-dx/90)); });
+  const end = ()=>{ if(!on) return; on=false; el.classList.remove('drag');
+    pay.style.opacity=skip.style.opacity=0;
+    if(dx>100){ el.style.transform=''; openSheet(c); }
+    else if(dx<-100) skipTop();
+    else el.style.transform=''; };
+  el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+}
+
+function fly(dir, then){
+  const el = $('#topBill'); if(!el){ then(); return; }
+  el.style.transform = `translateX(${dir*520}px) rotate(${dir*20}deg)`; el.style.opacity = 0;
+  setTimeout(then, calm ? 0 : 260);
+}
+function skipTop(){
+  const v = visible(), c = v[0]; if(!c || v.length<2) { const el=$('#topBill'); if(el) el.style.transform=''; return; }
+  fly(-1, ()=>{ deck = deck.filter(x=>x!==c).concat(c); renderDeck(); });
+}
+
+/* pay sheet */
+function openSheet(c){
+  st.current = c; const left = c.amount - c.raised;
+  $('#shTitle').textContent = c.type;
+  $('#shSub').textContent = `${c.who} in ${c.city.split(',')[0]} still needs ${money(left)}.`;
+  $('#shAmts').innerHTML = [10,25,50].filter(a=>a<left).map(a=>`<button data-a="${a}">$${a}</button>`).join('') +
+    `<button class="on" data-a="${left}">All ${money(left)}</button>`;
+  st.amt = left; $('#shCustom').value = '';
+  $('#shType [data-t=Zakat]').disabled = !c.zakat; $('#shOnly').hidden = c.zakat;
+  setType(c.zakat && st.zakatMode ? 'Zakat' : 'Sadaqah');
+  $('#shGa').checked = false; goLabel(); $('#app').classList.add('open');
+}
+const closeSheet = () => $('#app').classList.remove('open');
+function goLabel(){ const c=st.current, a=Math.min(st.amt, c.amount-c.raised);
+  $('#shGo').textContent = a>0 ? `Pay ${money(a)} to the ${c.biller.split(',')[0].toLowerCase()}` : 'Enter an amount'; $('#shGo').disabled = !(a>0);
+  $('#shGaTxt').textContent = a>0 ? `We can claim another £${(a*0.25).toFixed(2)} from HMRC at no cost to you and put it towards more bills. You must be a UK taxpayer.` : 'We can claim 25p for every £1 from HMRC at no cost to you. You must be a UK taxpayer.'; }
+function setType(t){ st.giveType=t; $$('#shType button').forEach(b=>b.classList.toggle('on', b.dataset.t===t)); }
+$('#shAmts').onclick = e=>{ const b=e.target.closest('button'); if(!b) return;
+  $$('#shAmts button').forEach(x=>x.classList.toggle('on',x===b)); st.amt=+b.dataset.a; $('#shCustom').value=''; goLabel(); };
+$('#shCustom').oninput = e=>{ st.amt = +e.target.value||0; $$('#shAmts button').forEach(x=>x.classList.remove('on')); goLabel(); };
+$('#shType').onclick = e=>{ const b=e.target.closest('button'); if(b && !b.disabled) setType(b.dataset.t); };
+$('#shNo').onclick = $('#scrim').onclick = closeSheet;
+$('#shGo').onclick = ()=>{
+  const c = st.current, a = Math.min(st.amt, c.amount - c.raised); if(!(a>0)) return;
+  const before = st.given; c.raised += a; st.given += a;
+  const done = c.raised >= c.amount; if(done) st.cleared++;
+  const ga = $('#shGa').checked;
+  st.hist.unshift({t:c.type, w:c.who, a, k:st.giveType + (ga?' with Gift Aid':''), done});
+  closeSheet();
+  fly(1, ()=>{ deck = deck.filter(x=>x!==c); if(!done) deck.push(c); renderDeck(); stats(before); });
+  toast(`<b>Paid ${money(a)}</b> to the ${c.biller.split(',')[0].toLowerCase()}. ${done ? 'This bill is settled.' : money(c.amount-c.raised)+' still to go.'} Jazak Allahu khayran.`);
+};
+
+function countUp(el, from, to){
+  if(calm || from===to){ el.textContent = money(to); return; }
+  const t0 = performance.now(), run = t => { const p = Math.min(1,(t-t0)/600), e = 1-Math.pow(1-p,3);
+    el.textContent = money(from+(to-from)*e); if(p<1) requestAnimationFrame(run); };
+  requestAnimationFrame(run);
+}
+function stats(before){
+  countUp($('#givenTop'), before ?? st.given, st.given);
+  $('#sayMe').innerHTML = st.given
+    ? `You have given <b>${money(st.given)}</b> and settled <b>${st.cleared}</b> ${st.cleared===1?'bill':'bills'}.`
+    : 'You have not given yet. The first bill is one swipe away.';
+  if(st.hist.length) $('#hist').innerHTML = st.hist.map(h=>
+    `<div class="rowi"><div>${h.t}<small>${h.w}</small></div><div class="amt">${money(h.a)}<small>${h.k}</small>${h.done?'<small class="ok">Settled</small>':''}</div></div>`).join('');
+}
+
+function toast(html){ const t=$('#toast'); t.innerHTML=html; t.classList.add('on'); clearTimeout(toast.x); toast.x=setTimeout(()=>t.classList.remove('on'),3200); }
+
+/* nav + filters */
+const VIEWS=['give','request','zakat','impact'], toId={request:'ask'}, toHash={ask:'request'};
+function go(v, keep){ if(!keep) try{ history.replaceState(null,'', v==='give' ? location.pathname : '#'+(toHash[v]||v)); }catch(e){}
+  $$('.view').forEach(s=>s.classList.toggle('on', s.id==='v-'+v)); $$('#nav button').forEach(b=>b.classList.toggle('on', b.dataset.v===v)); $('main').scrollTop=0; }
+$('#nav').onclick = e=>{ const b=e.target.closest('button'); if(b) go(b.dataset.v); };
+function setFilter(f){ st.filter=f; $$('#filters button').forEach(b=>b.classList.toggle('on', b.dataset.f===f)); renderDeck(); }
+$('#filters').onclick = e=>{ const b=e.target.closest('button'); if(b){ if(b.dataset.f!=='zakat') st.zakatMode=false; setFilter(b.dataset.f); } };
+$('#bSkip').onclick = skipTop;
+$('#bPay').onclick = ()=>{ const c=visible()[0]; if(c) openSheet(c); };
+
+/* request form */
+$('#askForm').onsubmit = e=>{
+  e.preventDefault(); const f = new FormData(e.target);
+  st.reqs.unshift({type:f.get('type'), amount:+f.get('amount'), biller:f.get('biller'), verifier:f.get('verifier')});
+  const list = $('#reqList'); list.innerHTML = '';
+  st.reqs.forEach(r=>{ const d=document.createElement('div'); d.className='rowi';
+    const l=document.createElement('div'); l.textContent = r.type;
+    const s1=document.createElement('small'); s1.textContent = r.biller;
+    const s2=document.createElement('small'); s2.textContent = 'Waiting for ' + r.verifier; l.append(s1,s2);
+    const b=document.createElement('div'); b.className='amt'; b.textContent = money(r.amount); d.append(l,b); list.appendChild(d); });
+  $('#myReq').hidden = false; e.target.reset();
+  toast('<b>Sent for verification.</b> Your bill goes live once it is confirmed.');
+};
+
+/* zakat */
+function zakat(){
+  const g = k => +$(`[data-z=${k}]`).value || 0;
+  const m = $('#zNb').value; $('#zGpL').textContent = (m==='gold'?'Gold':'Silver')+' price per gram, £';
+  const nisab = g('gp')*(m==='gold'?87.48:612.36), net = g('cash')+g('gold')+g('inv')+g('owed')-g('debt');
+  const due = net >= nisab && nisab > 0 ? net*0.025 : 0;
+  $('#zNisab').textContent = `At this gold price the nisab is ${money(nisab)}.`;
+  $('#zDue').textContent = money(due);
+  $('#zMsg').textContent = net<=0 ? 'Enter your figures below.' : due ? `Due on ${money(net)} of net wealth.` : `Your net wealth of ${money(net)} is under the nisab, so no zakat is due. Sadaqah is always open.`;
+  $('#zGive').disabled = !due;
+}
+$('#zForm').oninput = zakat;
+$('#zNb').onchange = ()=>{ $('#zGp').value = $('#zNb').value==='gold' ? '95' : '0.80'; zakat(); };
+$('#zGive').onclick = ()=>{ st.zakatMode = true; setFilter('zakat'); go('give'); toast('Showing zakat-eligible bills only.'); };
+
+function fromHash(){ const h=location.hash.slice(1); if(VIEWS.includes(h)) go(toId[h]||h, true); }
+addEventListener('hashchange', fromHash);
+renderDeck(); stats(); zakat(); fromHash();
+</script>
+</body>
+</html>
